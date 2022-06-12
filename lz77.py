@@ -2,12 +2,11 @@
 Compress and decompress data with lz77 algorithm
 """
 
-
 def compress(text: str, buffer_limit=10) -> tuple[int, int, str]:
     """
     compress text with lz77 algorithm
     :param text: str text to compress
-    :param buffer_limit: int optional,  max length for buffer default=10
+    :param buffer_limit: int optional, max length for buffer, default=10
     :return: tuple( (offset, lenght, next symbol) )
     """
     result = []
@@ -19,7 +18,8 @@ def compress(text: str, buffer_limit=10) -> tuple[int, int, str]:
         for j in range(1, len(buffer)+1):
             for k in range(i, len(text)):
                 # compare buffer's and text's following letters
-                if buffer[-j + (k-i) % j] != text[k]:   break
+                if buffer[-j + (k-i) % j] != text[k]:
+                    break
             if k-i > length:
                 offset, length = j, k-i
         i += length + 1
