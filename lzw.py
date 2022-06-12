@@ -2,6 +2,7 @@
 LZW comression algorithm
 """
 
+
 def compress(text: str) -> tuple[list, dict]:
     """
     compress text with LZW alorithms.
@@ -42,12 +43,11 @@ def compress(text: str) -> tuple[list, dict]:
     return result_list, dct
 
 
-def decompress(compressed_data: tuple[list, dict]) -> str:
+def decompress(code_sequence:list, dct: dict) -> str:
     """
     decompress message with LZW algorithm
-    :param compressed_data: tuple: (code_sequence, dct)
     :param code_sequence: list with sequence with keys
     :param dct: dict with numbers as keys and related strings as values
     :return: string with decompressd text
     """
-    return ''.join(compressed_data[1][x] for x in compressed_data[0])
+    return ''.join(dct[x] for x in code_sequence)
