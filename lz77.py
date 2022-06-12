@@ -13,7 +13,7 @@ def compress(text: str, buffer_limit=10) -> tuple[int, int, str]:
     i = 0
     while True:
         offset, length = 0, 0
-        buffer = 0, 0, text[max(0, i-buffer_limit): i]
+        buffer = text[max(0, i-buffer_limit): i]
         # iterate and find offset that gives the biggest length
         for j in range(1, len(buffer)+1):
             for k in range(i, len(text)):
@@ -32,7 +32,7 @@ def compress(text: str, buffer_limit=10) -> tuple[int, int, str]:
 def decompress(sequence: tuple[int, int, str]):
     """
     decompress text from lz77 compression
-    :param sequence: tuple(offset, lenght, next symbol)
+    :param sequence: tuple[offset, lenght, next symbol]
     :return: string with decompressed text
     """
     result = []
