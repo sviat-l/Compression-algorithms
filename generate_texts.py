@@ -68,13 +68,13 @@ def full_random_text(length:int, alphabet_len=26):
 # ------------------------------------------------------------------------------------------------
 
 
-def repeatetive_texts(length:int, repeatetive_part = .3, words=100, word_len=10, alphabet_len=26):
+def repeatetive_text(length:int, repeatetive_part = .3, words=100, word_len=10, alphabet_len=26):
     """
     return string that contains generated repeated words in some proportion
     :param length: length of the text to return
+    :param alphabet_len: number of letters in our alphabet, <27, default=26
     :param repeatetiv_part: show part of the text that contains stated repeated words
     :param word: number of words that will repeat in text, default = 100
-    :param alphabet_len: number of letters in our alphabet, <27, default=26
     :param word_len: length of the repeatetiv words, default=10
     :return: string with text some part of which consists of repeted words
     """
@@ -90,14 +90,14 @@ def repeatetive_texts(length:int, repeatetive_part = .3, words=100, word_len=10,
     return ''.join(result[:length])
 
 
-def cyclic_texts(length:int, repeat_len=10, alphabet_len=26):
+def cyclic_text(length:int, cyclic_len=10, alphabet_len=26):
     """
     return string that consists in full of repeated words
     :param length: length of the text to return
     :param alphabet_len: number of letters in our alphabet, <27, default=26
-    :param repeat_len: length of the repeatetiv part
+    :param cyclic_len: length of the repeatetive part
     :return: string with repeated text
     """
     alphabet = 'abcdefghijklmnopqrstuvwxyz'[:alphabet_len]
-    word = ''.join(random.choice(alphabet) for _ in range(repeat_len))
-    return word*(length//repeat_len) + word[:length%repeat_len]
+    word = ''.join(random.choice(alphabet) for _ in range(cyclic_len))
+    return word*(length//cyclic_len) + word[:length%cyclic_len]
