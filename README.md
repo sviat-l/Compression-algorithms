@@ -71,7 +71,7 @@ Deflate: (0, 0, '0'), (0, 0, '1'), (1, 2, '0'), (2, 4, '0'), (7, 5, '1'), (10, 4
 </br>
 
 ## Tests
-To test scripts were created more than 1000 tests, in text format with strings different length and format. Related functions to create test strings are implemented in [generate_texts.py](/generate_texts.py) and saved in directory [Test_cases.](Test_cases)
+To test scripts were created more than 1000 tests, in text format with strings different length and format. Related functions to create test strings are implemented in [generate_texts.py](../main/generate_texts.py) and saved in directory [Test_cases.](../main/Test_cases)
 
 There are cases of 5 types:
 1. Full random - letters chouses absolutely randomly
@@ -83,36 +83,42 @@ There are cases of 5 types:
 </br>
 
 ## Results
-Algorithms were tested on different strings and its results were saved in directory: [Tests_results](Test_results) in .csv files
-- Functions to run tests and write results, are implemented in [run_tests.py](run_tests.py).
-- Visualised results were created with module [visualization.py](visualization.py)
+Algorithms were tested on different strings and its results were saved in directory: [Tests_results](../main/Test_results) in .csv files
+- Functions to run tests and write results, are implemented in [run_tests.py](../main/run_tests.py).
+- Visualised results were created with module [visualization.py](../main/visualization.py)
 
 ### Compress
-[FOTO1]()
+
+<!-- <p align="center"><img width="300" height="300" src="../main/Plots/Compress time.png"></p> -->
+
+![image](https://user-images.githubusercontent.com/91615606/173955630-2f5d46b0-78ea-42b7-8c68-4fa59fe877ad.png)
 
 - As we can see all algorithms has linear time complexity to compress and decompress text string O(n), n=length. But with different constants.
 - LZ77 and, consequently, Deflate algorithms have the bigger constant and take more time to compress data.
 - The fastet compress algorithm is huffman it works in ~10 times faster than other.
 
 ### Decompress
-[FOTO2]()
+![image](https://user-images.githubusercontent.com/91615606/173955708-38d4a84a-75c2-4348-8ab2-ad789e7e1c68.png)
+
 - On contrast, Huffman and, consequently, Deflate algorithms have the bigger constant to to decompress data.
 - LZ77 and LZW work in 3-5 times faster than Huffman and Deflate
 - LZW is the fastest algorithm to compress and decompress date.
 
 ### Compressing rate
-[FOTO3]()
+![image](https://user-images.githubusercontent.com/91615606/173955748-32679b34-3d08-4d04-8e97-af389e9cde5d.png)
 - All algorithms has higher compression rate for cyclic text, and a few higher for repeatetive, with small difference beetwen real and random tests.
 - Huffman algorithm has the less difference beetwen cyclic test cases and other
+![image](https://user-images.githubusercontent.com/91615606/173955912-30031b62-255c-4e94-bd85-fdd3af425fc0.png)
 - On the contrary, LZW is extremely effective for cyclic tests
 
 ### By types
-[FOTO3]()
+![image](https://user-images.githubusercontent.com/91615606/173956091-56551403-b43a-4b50-8c5c-4bd352516d13.png)
 - Full random texts take the most time to encode, while cyclic are
 - Repeatetive tests are easier to compress but not so much than real and typical tests
+![image](https://user-images.githubusercontent.com/91615606/173956232-97fb6dc8-c5fe-4e60-b11d-d074c8f6d2d7.png)
 - In decompression the difference is even less, but cyclic tests still are easier to decompress in ~1.5 times
 
 
 
-More plots are saved in [Plots](Plots) repositoty.
+More plots are saved in [Plots](../main/Plots) repositoty.
 
