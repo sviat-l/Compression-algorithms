@@ -101,11 +101,13 @@ Algorithms were tested on different strings and its results were saved in direct
 - LZW is the fastest algorithm to compress and decompress date.
 
 ### Compressing rate
+[FOTO3]()
 - All algorithms has higher compression rate for cyclic text, and a few higher for repeatetive, with small difference beetwen real and random tests.
+- Huffman algorithm has the less difference beetwen cyclic test cases and other
+- On the contrary, LZW is extremely effective for cyclic tests
 
 ### By types
 [FOTO3]()
-
 - Full random texts take the most time to encode, while cyclic are
 - Repeatetive tests are easier to compress but not so much than real and typical tests
 - In decompression the difference is even less, but cyclic tests still are easier to decompress in ~1.5 times
