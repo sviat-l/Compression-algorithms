@@ -1,13 +1,13 @@
 """
 Module to create text cases and files with test results
 """
-import generate_texts as gt
 import random
+import time
+import generate_texts as gt
 import lz77
 import lzw
 import huffman
 import deflate
-import time
 
 
 def write_tests(text_type:str, length:int, number=1,repo_name='Test_cases',  alph_len=26,
@@ -19,7 +19,7 @@ def write_tests(text_type:str, length:int, number=1,repo_name='Test_cases',  alp
     :param length: length of the text to write
     :param number: number of lines to write
     :param alphabet_len: number of letters in our alphabet, <27, default=26
-    .: paramaters: repeat_part, words, cyclic_len - related to functions in generate texst
+    ..: paramaters: repeat_part, words, cyclic_len - related to functions in generate texst
     :param repeatetiv_part: show part of the text that contains stated repeated words
     :param word: number of words that will repeat in text, default = 100
     :param word_len: length of the repeatetiv words, default=10
@@ -73,26 +73,62 @@ def write_real_text():
 
 
 # -------------------------------------------------------------------------------------------------
-# for algo in [lz77, lzw, huffman, deflate]:
-#     print(f'-------CURRENT ALGO = {algo.__name__} -------')
-#     for TEST_TEXT in basic_tests:
-#         compressed = algo.compress(TEST_TEXT)
-#         if algo == lz77:
-#             compressed = [compressed]
-#         DECOMPRESSED = algo.decompress(*compressed)
-#         # print('--- Inital  text ---', TEST_TEXT, sep='\n')
-#         print('___compressed___', compressed, sep='\n')
-#         # print('--- Decompressed text ---', DECOMPRESSED, sep='\n')
-#         # print(
-#         #     f'\nInitial text == decompressed text\n {TEST_TEXT == DECOMPRESSED}')
-#         assert(TEST_TEXT == DECOMPRESSED)
 
-# result(algo) = (length, text type, time to compress, compression level)
+def get_test_result_data(text:str, algo):
+    """
+    get test results parameters
+    :param text: string to compress
+    :param algo: algorithm to use for compression
+    """
+    # calculating time to compress data
+    st_time = time.time()
+    compressed = algo.compress(text)
+    compress_time = time.time() - st_time
+    # find aproximately compressed data ratio
+    if algo==deflate:
+        compressed_text_size =sum(pair[0].bit_length() for pair in compressed[0])
+    elif algo==huffman:
+        compressed_text_size = len(compressed[0])
+    elif algo==lzw:
+        compressed_text_size = sum(int(x).bit_length() for x in compressed[0].split()) +\
+                               len(''.join(compressed[1].values()))
+    elif algo==lz77:
+        compressed_text_size = sum(sum( x.bit_length() for x in pair[:2]) for pair in compressed)+\
+                                    len(compressed)*8
+        compressed = [compressed]
+    compression_level = 1- compressed_text_size/(8*len(text))
 
-def write_result():
-    with open('Test_cases/test_string.txt', 'r') as f:
-        text = []
-        for line in f:
-            text.append(line.strip())
-        text = ''.join(text)
-        print(len(text))
+    # calculating time to decompress data
+    st_time = time.time()
+    decompressed = algo.decompress(*compressed)
+    decompress_time = time.time() - st_time
+
+    if decompressed != text:
+        return "!!!WRONG ANSVER!!!"
+    return len(text), compress_time, decompress_time, compression_level
+
+def write_results(algorithms:list,test_types:list, save_path:str, test_path:str):
+    """
+    write test results for all file types and allalgorithms
+    safa data in csv in format: length, compress_time,decompress_time, compression_level
+    :param algorithms: list with algorithms to comapare
+    :param test_types: list with data type charasteristics
+    :param save_path: directory path to safe results
+    :param test_path: directory path to get test cases
+    """
+    for tpt in test_types:
+        with open(f'{test_path}{tpt}.txt', 'r', encoding='utf-8') as read_file:
+            text = [line.strip() for line in read_file]
+            for algo in algorithms:
+                with open(f'{save_path}{algo.__name__}.csv', 'a', encoding='utf-8') as write_file:
+                    write_file.write(f'---{tpt}---test cases---\n')
+                    for line in text:
+                        test_result = get_test_result_data(line, algo)
+                        write_file.write('  ,  '.join(str(x) for x in test_result))
+                        write_file.write('\n')
+
+
+ALGORITHMS = [lz77, lzw, huffman, deflate]
+TEST_TYPES = ['cyclic', 'full_random', 'typical', 'repeatetive', 'real']
+SAVE_PATH = 'Tests_results/'
+TEST_PATH = 'Test_cases/'
