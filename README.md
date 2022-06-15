@@ -2,8 +2,6 @@
 _Implemented most popular compression algorithms and presented results\
 Each algorithm is implemented in eponymous files_
 
-</br>
-
 ## LZ77
 The main idea is that you look backward in data to find repeating of the following symbols in the buffer. Save compressed data in a sequence of tuples (offset, length, next symbol).
 1. offset - shows how many symbols back you should go back
